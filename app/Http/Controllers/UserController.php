@@ -5,19 +5,34 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Closure;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\View\ViewCompilationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    use Authenticatable;
+
+   public function __construct(){
+         $this->middleware("check.auth");
+   }
+       
+    
+   public function redirectRoute(){
+     return redirect()->route('login.show');
+   }
+
     /**
      * Display a listing of the resource.
-     */
+    */
     public function index() 
     {
+                                   
          $users = User::paginate(10);
   
         return view('users.index')->with([
@@ -33,6 +48,8 @@ class UserController extends Controller
      */
     public function create()
     {
+                                     
+
         return view('users.create');
     }
 
@@ -53,7 +70,7 @@ class UserController extends Controller
               $image = 'users/useravatar.jpg';
         }
 
-        (User::create([
+        ($user = User::create([
             'date_of_birth' => Carbon::parse($validate_data['date_of_birth'])->toDateString(),
              'name' => $validate_data['name'],
              'email' => $validate_data['email'],
@@ -61,7 +78,13 @@ class UserController extends Controller
              'image' => $image
         ]));
 
-       return redirect()->route('users.index');
+
+        if($user != null){
+            Auth::login($user);
+             return true;
+        }else{
+        return false;
+        }
     }
 
     /**

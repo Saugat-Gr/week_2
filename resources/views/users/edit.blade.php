@@ -4,10 +4,10 @@
 
 <div class="container mt-5">
     <h3 class="btn btn-success float-end"><a href="{{route('users.index')}}" class="text-decoration-none text-white">Home</a></h3>
-  <h2 class="text-center">
-    Update  User
+  <h2 class="mt-5">
+    Edit User
   </h2>
-<form action="{{route('users.update', $user)}}" method="POST" enctype="multipart/form-data">
+<form action="{{route('users.update', $user)}}" method="POST" enctype="multipart/form-data" class="border p-4 ">
 
     @method('PUT')
 

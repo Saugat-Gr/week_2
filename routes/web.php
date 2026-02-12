@@ -4,7 +4,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
+Route::get('/first', function () {
     return 'Hello World';
 });
 

@@ -1,0 +1,58 @@
+API, 
+API resources,
+API authentication and sanctum, 
+Idempotent in API, 
+Stateful API and Stateless API,
+Behavior of API,
+Request LifeCycle of an API, 
+
+
+Sanctum: 
+
+ Before Sanctum -> Users Log In : Server Creates a Session : Browser Stores Cookies
+
+ FOR API's: Mobile Apps don't use sessions, Postman doesn't use Sessions, External    apps can't use your cookies, 
+
+  Feature we need: Users Login, Server Gives Token, Client Sends Token Every Request, 
+
+
+
+  Request Lifecycle:
+
+  Login -> Laravel Check Credentials -> Sanctum creates Token -> Client Stores Token
+  ->  CLient Sends Token In Authorization Header -> auth:sanctum verifies token -> Laravel knows the user 
+
+
+  Principle: sanctum creates token and validates the token, 
+
+   $token = $user->createToken('api-token')->plainTextToken;
+    
+    1. User logs in
+    2. Sanctum creates token and stores it in database
+    3. Client stores token
+    4. Client sends token with request
+    5. auth:sanctum middleware runs
+    6. Token checked in database
+    7. User attached to request
+    8. Controller runs
+
+
+
+Validating the request: what must be sent with the request api's body
+
+
+Model are the same, even if you are routing with web or api,
+
+
+Getting data from the DB via the controller/methods, 
+Visualizing or representing data, 
+Control What data to be showed, 
+Validate the incoming data, 
+Authentication, 
+Authorization
+
+
+Creation of a User Resource, 
+
+
+

@@ -22,17 +22,41 @@
             <div class="mb-3">
                 <label>Email</label>
                 <input type="email" class="form-control" name="email" required>
+                @error('email', 'log-in')
+                        <span class="text-danger">{{$message}}</span>
+                @enderror
             </div>
 
             <div class="mb-3">
                 <label>Password</label>
                 <input type="password" class="form-control" name="password" required>
+            @error('password', 'log-in')
+                        <span class="text-danger">{{$message}}</span>
+                @enderror
             </div>
+
+
+            <div class="mb-3">
+                <label>Confirm Password</label>
+                <input type="password" class="form-control" name="password_confirmation" required>
+            @error('password_confirmation', 'log-in')
+                        <span class="text-danger">{{$message}}</span>
+                @enderror
+            </div>
+
+        <div class="mt-2">
+            @error('invalid-login', 'log-in')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
 
             <button type="submit" class="btn btn-info w-100 mt-3">
                 Submit
             </button>
+
         </form>
+
+    
     </div>
 
     
@@ -54,7 +78,7 @@
                 <div class="mb-2">
                     <label>Name</label>
                     <input type="text" name="name" class="form-control" required>
-                    @error('name')
+                    @error('name', 'register')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>
@@ -62,7 +86,7 @@
                 <div class="mb-2">
                     <label>Email</label>
                     <input type="email" name="email" class="form-control" required>
-                    @error('email')
+                    @error('email', 'register')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>
@@ -70,7 +94,7 @@
                 <div class="mb-2">
                     <label>Password</label>
                     <input type="password" name="password" class="form-control" required>
-                    @error('password')
+                    @error('password', 'register')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>
@@ -78,7 +102,7 @@
                 <div class="mb-2">
                     <label>Image</label>
                     <input type="file" name="image" class="form-control">
-                    @error('image')
+                    @error('image', 'register')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>
@@ -86,7 +110,7 @@
                 <div class="mb-3">
                     <label>Date of Birth</label>
                     <input type="date" name="date_of_birth" class="form-control">
-                    @error('date_of_birth')
+                    @error('date_of_birth', 'register')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\LogUserRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,9 +15,9 @@ class LoginController extends Controller
     }
 
 
-     public function authenticateUser(Request $request): RedirectResponse{
+     public function authenticateUser(LogUserRequest $request): RedirectResponse{
 
-         $credentials = $request->only("email","password");
+         $credentials = $request->validated();
 
           $user = Auth::attempt($credentials);
             
@@ -26,10 +27,12 @@ class LoginController extends Controller
              return redirect()->route('users.index');
           }
 
-          return redirect()->route('login.show');
+          return redirect()->route('login.show')->withErrors([
+             'invalid-login' => "Invalid Login Credentials"
+          ], 'log-in');
      }
 
-     public function register(CreateUserRequest $request){
+      public function register(CreateUserRequest $request){
          $user = new UserController();
         $reigstered =  $user->store($request);
 

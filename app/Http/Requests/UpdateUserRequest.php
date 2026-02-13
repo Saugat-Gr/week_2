@@ -23,7 +23,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
              'name' => 'bail|required|min:3',
-             'password' => 'bail|nullable|min:8',
+             'password' => 'bail|nullable|min:8|confirmed',
              'date_of_birth' => 'nullable|date|after:1990-01-01|before:2010-12-31',
              'image' => 'nullable|image|mimes:jpg,jpeg,png,'
         ];

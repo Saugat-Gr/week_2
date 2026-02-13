@@ -13,9 +13,11 @@
      
      <div class="container-sm border shadow-lg p-4 mt-4 ">
     
-     <img src="{{asset('storage/' .$user->image)}}" alt="{{$user->name}}" height="250px">
-
-     <div class="content mt-5">
+          <h2 class="text-center mb-4 mt-4">About User</h2>
+          
+          <img src="{{asset('storage/' .$user->image)}}" alt="{{$user->name}}" height="250px">
+          
+          <div class="content mt-5">
       <p class=""> <strong> Name:</strong> {{$user->name}}</p>
       <p class=""> <strong>Email:</strong> {{$user->email}}</p>
       <p class=""> <strong> Date of Birth:</strong> {{$user->date_of_birth}}</p>

@@ -4,10 +4,10 @@
 
 <div class="container mt-5">
     <h3 class="btn btn-success float-end"><a href="{{route('users.index')}}" class="text-decoration-none text-white">Home</a></h3>
-  <h2 class="text-center">
-    Update  User
+  <h2 class="mt-5">
+    Edit User
   </h2>
-<form action="{{route('users.update', $user)}}" method="POST" enctype="multipart/form-data">
+<form action="{{route('users.update', $user)}}" method="POST" enctype="multipart/form-data" class="border p-4 ">
 
     @method('PUT')
 
@@ -25,9 +25,18 @@
     <label for="email" class="form-label">Email address</label>
     <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" value="{{ $user->email}}" disabled>
   </div>
+
   <div class="mb-3">
     <label for="password" class="form-label">Password</label>
     <input type="password" name="password" class="form-control" id="password">
+    @error('password')
+        <span class="text-danger">{{$message}}</span>
+    @enderror
+  </div>
+
+   <div class="mb-3">
+    <label for="password" class="form-label">Confirm Password</label>
+    <input type="password" name="password_confirmation" class="form-control" id="password">
     @error('password')
         <span class="text-danger">{{$message}}</span>
     @enderror

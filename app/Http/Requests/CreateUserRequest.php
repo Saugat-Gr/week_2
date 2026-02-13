@@ -26,7 +26,7 @@ class CreateUserRequest extends FormRequest
         return [
              'name' => 'bail|required|min:3',
            'email' => 'bail|required|email',
-           'password' => 'bail|required|min:8|confirmed',
+           'password' => 'bail|required|min:8',
            'date_of_birth' => 'nullable|date|after:1990-01-01|after:1990-01-01|before:2010-12-31',
            'image' => 'nullable|image|mimes:jpg,jpeg,png,'
         ];

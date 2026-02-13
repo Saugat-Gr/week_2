@@ -128,4 +128,18 @@
 
 </div>
 
+@if ($errors->register->any())
+<script>
+        const loginFormEL = document.querySelector('.login-form');
+        const registerTextEL = document.querySelector('.register-text');
+        const loginTextEL = document.querySelector('.login-text');
+        const registerFormEL = document.querySelector('.register-form');
+        
+        loginFormEL.classList.add('d-none');
+        registerTextEL.classList.add('d-none');
+        registerFormEL.classList.remove('d-none');
+        loginTextEL.classList.remove('d-none');
+</script>
+@endif
+
 @endsection

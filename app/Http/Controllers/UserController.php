@@ -122,7 +122,7 @@ class UserController extends Controller
 
     public function displayTrashed(){
           $trahsedUsers = User::onlyTrashed()->get();
-          return view('users.trashed')->with('trashed', $trahsedUsers);
+          return view('users.trhttps://docs.google.com/presentation/d/1QRNS_ehPKp18zTphaZAoYzX-jA2HgLxTQE7SYSnYwoE/edit?slide=id.p#slide=id.pashed')->with('trashed', $trahsedUsers);
     }
 
     public function permanentDelete($id){

@@ -25,8 +25,8 @@ class CreateUserRequest extends FormRequest
            'name' => 'required|min:3',
            'email' => 'required|email',
            'password' => 'required|min:8',
-           'date_of_birth' => 'nullable|date|after:1990-01-01|after:1990-01-01|before:2010-12-31',
-           'image' => 'nullable|image|mimes:jpg,jpeg,png,'
+           'date_of_birth' => 'nullable|date|after:1990-01-01|before:2010-12-31',
+           'image' => 'nullable|image|mimes:jpg,jpeg,png'
         ];
     }
 }

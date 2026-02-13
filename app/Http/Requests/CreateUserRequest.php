@@ -22,11 +22,23 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'name' => 'bail|required|min:3',
-           'email' => 'bail|required|email',
-           'password' => 'bail|required|min:8',
-           'date_of_birth' => 'nullable|date|after:1990-01-01|after:1990-01-01|before:2010-12-31',
-           'image' => 'nullable|image|mimes:jpg,jpeg,png,'
+            'name' => 'bail|required|min:3',
+            'email' => 'bail|required|email',
+            'password' => 'bail|required|min:8',
+            'date_of_birth' => 'nullable|date|after:1990-01-01|before:2010-12-31',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Name is required.',
+            'name.min' => 'Name must be at least 3 characters.',
+            'email.required' => 'Email address is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'password.required' => 'Password cannot be empty.',
+            'password.min' => 'Password must be at least 8 characters long.',
         ];
     }
 }

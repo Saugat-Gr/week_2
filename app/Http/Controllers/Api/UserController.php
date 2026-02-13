@@ -26,13 +26,19 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-           $user = User::create($request->validated());
+        try {
+
+            $user = User::create($request->validated());
             
             if($user){
                 return (new UserResource($user))->response()->setStatusCode(201);
-         }
-
-         return response( 'User Cannot Be Created')->setStatusCode(401);       
+            }
+                
+            return response( 'User Cannot Be Created')->setStatusCode(401);       
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response('')->setStatusCode(422);
+        }
       
     }
 

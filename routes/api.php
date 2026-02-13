@@ -12,4 +12,4 @@ Route::get('/', function(){
 // Route::post('/users', [UserController::class,'store']);
 
 
-Route::apiResource('/users', UserController::class);
+Route::apiResource('user', UserController::class);

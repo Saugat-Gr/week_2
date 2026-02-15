@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
 use App\Models\Post;
+use Auth;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function __construct(){
+         $this->middleware("check.auth");
+   }
+
     /**
      * Display a listing of the resource.
      */
@@ -15,7 +20,7 @@ class PostController extends Controller
     {
         $posts = Post::all();
 
-        return view('posts.index')->with('posts');
+        return view('posts.index')->with('posts', $posts);
     }
 
     /**
@@ -43,20 +48,33 @@ class PostController extends Controller
 
             }
 
-             dd(Post::create([
+            /* 
+               Two options:
+               First Option: Conversion of table column type onto: json and setting casts as array
+               Second Option: json_encode() and json_decode(), I have followed the longer approach here to know the under the hood action,
+
+            */
+
+            // dd($validated_data, $imagePath);
+
+
+             $post = (Post::create([
                   'title'=> $validated_data['title'],
                   'post_content' => $validated_data['post_content'],
-                  'images' => $imagePath
+                  'images' => json_encode($imagePath),
+                  'user_id' => Auth::user()->id
              ]));
 
+             return redirect()->route('post.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        //
+
+        return view('posts.show')->with('post', $post);
     }
 
     /**

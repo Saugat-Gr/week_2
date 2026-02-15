@@ -27,4 +27,15 @@ class CreatePostRequest extends FormRequest
             'post_content' => 'required|min:10|string'
         ];
     }
+
+      public function messages(): array
+    {
+        return [
+            'title.required' => 'Title is required.',
+            'title.min' => 'Title must be at least 4 characters.',
+            'images.required' => 'Image is required.',
+            'images.mimes' => 'Image type not supported',
+            'post_content' => 'A description of length 10 is required',
+        ];
+    }
 }

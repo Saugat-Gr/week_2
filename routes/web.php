@@ -9,7 +9,7 @@ use App\Http\Controllers\PostController;
 
 
 Route::get('/', function(){
-    return redirect('/users');
+    return redirect('/post');
 });
 
 Route::get('users/trashed', [UserController::class, 'displayTrashed'])->name('users.trashed');

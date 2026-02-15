@@ -25,7 +25,7 @@ class LoginController extends Controller
           if($user){
              $request->session()->regenerate();
 
-             return redirect()->route('users.index');
+             return redirect()->route('post.index');
           }
 
           return redirect()->route('login.show')->withErrors([

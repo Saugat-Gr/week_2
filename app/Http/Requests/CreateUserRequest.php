@@ -31,4 +31,6 @@ class CreateUserRequest extends FormRequest
            'image' => 'nullable|image|mimes:jpg,jpeg,png,'
         ];
     }
+
+    
 }

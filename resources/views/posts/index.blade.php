@@ -18,12 +18,30 @@
       <th scope="col">Thumbnail</th>
       <th scope="col">Title</th>
       <th scope="col">Author</th>
-      <th scope="col">Published Date</th>
+      <th scope="col">Created Date</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
 
+
+    @foreach ($posts as $key => $post)
+    
+    <tr onclick="window.location='{{ route('post.show', $post) }}'" style="cursor:pointer;" >
+      <td>{{ $key + 1}}</td>
+      <td><img src="{{ "storage/" . $post->images[0] }}" alt="" width="100px"></td>
+      <td>{{ $post->title }}</td>
+      <td>{{ App\Models\User::findOrFail($post->user_id)->name }}</td>
+      <td>{{ $post->created_at->format('d-m-Y') }}</td>
+      <td>
+
+        <button class="btn btn-primary"> <a href="#" class="text-decoration-none text-light">Edit</a> </button>
+        <button class="btn btn-danger"> <a href="#" class="text-decoration-none text-light"> Delete </a></button>
+
+      </td>
+    </tr>
+
+    @endforeach
 
   </tbody>
 </table>

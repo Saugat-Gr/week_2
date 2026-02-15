@@ -15,6 +15,9 @@
        <div class="mb-4">
             <label for="title" class="form-label">Title</label>
             <input type="text" name="title" id="title" required class="form-control">
+            @error('title')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
 
 
@@ -22,12 +25,22 @@
             <label for="images[]" class="form-label">Images</label>
             <div id="preview"></div>
             <input type="file" class="form-label" name="images[]" multiple onchange="readURL(this)">
+        
+        @error('images')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        
         </div>
 
         <div class="mb-4">
-            <label for="post_description" class="form-label">Post Description</label>
-             <textarea name="post_description" id="editor" class="form-label"></textarea>
-        </div>
+            <label for="post_content" class="form-label">Post Description</label>
+             <textarea name="post_content" id="editor" class="form-label"></textarea>
+            
+             @error('post_content')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        
+            </div>
 
         <button type="submit" class="btn btn-dark  float-end">Create</button>
 

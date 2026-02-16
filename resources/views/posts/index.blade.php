@@ -27,12 +27,12 @@
 
     @foreach ($posts as $key => $post)
     
-    <tr onclick="window.location='{{ route('post.show', $post) }}'" style="cursor:pointer;" >
+    <tr  >
       <td>{{ $key + 1}}</td>
-      <td><img src="{{ "storage/" . $post->images[0] }}" alt="" width="100px"></td>
+      <td onclick="window.location='{{ route('post.show', $post) }}'" style="cursor:pointer;"><img src="{{ "storage/" . $post->images[0] }}" alt="" width="100px"></td>
       <td>{{ $post->title }}</td>
       <td>{{ App\Models\User::findOrFail($post->user_id)->name }}</td>
-      <td>{{ $post->created_at->format('d-m-Y') }}</td>
+      <td>{{ $post->created_at->format('d M, Y') }}</td>
       <td>
 
         <button class="btn btn-primary"> <a href="#" class="text-decoration-none text-light">Edit</a> </button>

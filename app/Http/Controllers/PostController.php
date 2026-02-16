@@ -38,6 +38,7 @@ class PostController extends Controller
     {
             $validated_data = $request->validated();
 
+
             $imagePath = [];
 
             if($request->hasFile('images')){
@@ -58,10 +59,10 @@ class PostController extends Controller
             // dd($validated_data, $imagePath);
 
 
-             $post = (Post::create([
+              (Post::create([
                   'title'=> $validated_data['title'],
                   'post_content' => $validated_data['post_content'],
-                  'images' => json_encode($imagePath),
+                  'images' => ($imagePath),
                   'user_id' => Auth::user()->id
              ]));
 

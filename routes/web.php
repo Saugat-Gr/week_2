@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.sho
 Route::get('/logout', [LoginController::class,'logout'])->name('users.logout');
 Route::post('/login', [LoginController::class,'authenticateUser'])->name('user.authenticate');
 Route::post('/register', [LoginController::class,'register'])->name('user.register');
+
+
+Route::get('categories/index', [CategoryController::class,'index'])->name('categories.index');

@@ -15,7 +15,7 @@
       
     <div class="user-div d-flex align-items-center gap-4">
        <p class="text-secondary"> 
-      <img class="rounded-circle" src="{{ asset("storage/" . App\Models\User::find($post->user_id)->image) }}" alt="" height="50px">  
+      <img class="rounded-circle" src="{{ asset("storage/" . App\Models\User::find($post->user_id)->image) }}" alt="" height="50px" width="50px">  
       {{ App\Models\User::findOrFail($post->user_id)->name }}</p>
      <p class="text-secondary">{{ $post->created_at->format('D M,Y') }}</p>
     </div>
@@ -24,12 +24,14 @@
 
 
 
-      
-       @foreach ($post->images as $image)
-           <img src="{{ asset('storage/' . $image) }}" alt="" width="100%">
-       @endforeach
+      @if (is_array($post->images) && count($post->images) > 0)
+        
+      @foreach ($post->images as $image)
+      <img src="{{ asset('storage/' . $image) }}" alt="" width="100%">
+      @endforeach
+      @endif
 
-     <p class="mt-5">{{ $post->post_content }}</p>
+     <p class="mt-5">{!!  $post->html_description !!}</p>
 
    </div>
 

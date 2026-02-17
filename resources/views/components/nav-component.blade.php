@@ -10,7 +10,8 @@
     <div class="page-nav ">
         <ul class="list-unstyled text-light d-flex align-items-center gap-4">
           <li> <a href="{{ route('post.index') }}" class="text-decoration-none text-light"> Posts </a> </li>
-          <li><a href="{{ route('categories.index') }}" class="text-decoration-none text-light"> Categories </a> </li>
+          <li><a href="{{ route('category.index') }}" class="text-decoration-none text-light"> Category </a> </li>
+          <li> <a href="{{ route('post.trash.index') }}" class="text-decoration-none text-light"> Trashed Posts </a> </li>
           <!-- <li><a href="#" class="text-decoration-none text-light"> Posts </a> </li> -->
         </ul>
 

@@ -10,7 +10,6 @@
 </style>
 
 <div class="container mt-5">
-  <a href="{{ route('post.create') }}" class="btn btn-success float-end mb-2 ml-2">Create A Post</a>
 <table class="table table-striped border">
   <thead class="text-center">
     <tr>
@@ -27,24 +26,22 @@
 
 
     @foreach ($posts as $key => $post)
+
     
     <tr >
       <td class="align-middle">{{ $key + 1}}</td>
       <td onclick="window.location='{{ route('post.show', $post) }}'" style="cursor:pointer;"><img src="{{ asset("storage/" . $post->images[0]) }}" alt="" width="100px"></td>
       <td class="align-middle">{{ $post->title }}</td>
-      <td class="align-middle">{{ $post->user->name }}</td>
+      <td class="align-middle">{{ App\Models\User::findOrFail($post->user_id)->name }}</td>
       <td class="align-middle">{{ $post->category->name}}</td>
       <td class="align-middle">{{ $post->created_at->format('d M, Y') }}</td>
-      <td class="d-flex align-items-center justify-content-center">
+      <td class="align-middle ">
 
-        <button class="btn btn-primary"> <a href="{{ route('post.edit', $post) }}" class="text-decoration-none text-light">
-          <i class="bi bi-pencil-fill"></i>
-        </a> </button>
         
-           <form action="{{ route('post.trash', $post) }}"  method="POST">
+           <form action="{{ route('post.destroy', $post) }}"  method="POST">
             @csrf
             @method('DELETE')
-             <button type="submit" class="btn btn-warning text-light" onclick="alert('Do You Want to delete this post?')"><i class="bi bi-trash-fill"></i></button>
+             <button type="submit" class="btn btn-danger text-light" onclick="alert('Do You Want to delete this post?')"><i class="bi bi-trash-fill"></i></button>
         </form>
 
       </td>

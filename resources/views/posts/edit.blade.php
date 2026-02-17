@@ -8,13 +8,14 @@
 
  <div class="container-sm  border border-lg p-5 shadow-lg">
      
-     <form action="{{ route('post.store') }}" enctype="multipart/form-data" method="POST">
+     <form action="{{ route('post.update', $post) }}" enctype="multipart/form-data" method="POST">
+        @method('PUT')
      @csrf
-       <h3 class="text-center">Create A Post</h3>
+       <h3 class="text-center">Edit Post</h3>
         
        <div class="mb-4">
             <label for="title" class="form-label">Title</label>
-            <input type="text" name="title" id="title" required class="form-control">
+            <input type="text" name="title" id="title" required class="form-control" value="{{ old('title', $post->title) }}">
             @error('title')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -43,16 +44,14 @@
                     </option>
                 @endforeach
             </select>
-
-            @error('category_id')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
         </div>
 
 
         <div class="mb-4">
             <label for="post_content" class="form-label">Post Description</label>
-             <textarea name="post_content" id="editor" class="form-label"></textarea>
+             <textarea name="post_content" id="editor" class="form-label">
+                {{ old('post_content', $post->post_content) }}
+             </textarea>
             
              @error('post_content')
                 <span class="text-danger">{{ $message }}</span>

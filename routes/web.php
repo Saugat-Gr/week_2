@@ -17,6 +17,10 @@ Route::get('users/trashed', [UserController::class, 'displayTrashed'])->name('us
 Route::delete('users/hardDelete/{user}', [UserController::class, 'permanentDelete'])->name('users.hardDelete');
 Route::resource('users', UserController::class);
 
+Route::resource('category', CategoryController::class);
+
+Route::get('/post/trash', [PostController::class,'getTrashedPosts'])->name('post.trash.index');
+Route::delete('/post/{post}/trash', [PostController::class,'softDelete'])->name('post.trash');
 Route::resource('post', PostController::class);
 
 
@@ -25,5 +29,3 @@ Route::get('/logout', [LoginController::class,'logout'])->name('users.logout');
 Route::post('/login', [LoginController::class,'authenticateUser'])->name('user.authenticate');
 Route::post('/register', [LoginController::class,'register'])->name('user.register');
 
-
-Route::get('categories/index', [CategoryController::class,'index'])->name('categories.index');

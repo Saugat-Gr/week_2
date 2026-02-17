@@ -24,7 +24,8 @@ class CreatePostRequest extends FormRequest
         return [
             'title' => 'required|min:4',
             'images.*' => 'required|mimes:png,jpeg,jpg',
-            'post_content' => 'required|min:10|string'
+            'post_content' => 'required|min:10|string',
+            'category_id' => 'required|exists:categories,id'
         ];
     }
 
@@ -36,6 +37,8 @@ class CreatePostRequest extends FormRequest
             'images.required' => 'Image is required.',
             'images.mimes' => 'Image type not supported',
             'post_content' => 'A description of length 10 is required',
+            'category_id.required' => 'Please Select a Category',
+            'category_id.exists' => 'Category Doesn\'t exists.'
         ];
     }
 }

@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
+use App\Models\Category;
 use App\Models\Post;
+use App\Traits\ToastrTrait;
 use Auth;
+use Exception;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    use ToastrTrait, SoftDeletes;
+
     public function __construct(){
          $this->middleware("check.auth");
    }
@@ -18,9 +24,17 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-
+        $posts = Post::with('category')->with('user')->get();
         return view('posts.index')->with('posts', $posts);
+    }
+
+    public function getTrashedPosts(){
+
+       $posts = Post::onlyTrashed()->get();
+
+
+       return view('posts.trashed', compact('posts'));
+
     }
 
     /**
@@ -28,7 +42,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+         $categories = Category::all();
+
+        return view('posts.create', compact('categories'));
     }
 
     /**
@@ -36,6 +52,7 @@ class PostController extends Controller
      */
     public function store(CreatePostRequest $request)
     {
+
             $validated_data = $request->validated();
 
 
@@ -63,10 +80,15 @@ class PostController extends Controller
                   'title'=> $validated_data['title'],
                   'post_content' => $validated_data['post_content'],
                   'images' => ($imagePath),
+                  'category_id' => $validated_data['category_id'],
                   'user_id' => Auth::user()->id
              ]));
 
-             return redirect()->route('post.index');
+                 $this->toastrSuccess('Post Created Successfully');
+                 return redirect()->route('post.index');
+
+
+        
     }
 
     /**
@@ -81,9 +103,11 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+        $categories = Category::all();
+
+        return view('posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -94,11 +118,26 @@ class PostController extends Controller
         //
     }
 
+    public function softDelete(Post $post){
+
+       $post->delete();
+       $this->toastrSuccess('Post Trashed Sucessfully.');
+
+       return redirect()->route('post.index');
+       
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(String $id)
     {
-        //
+        $post = Post::onlyTrashed()->find($id);
+
+        $post->forceDelete();
+
+        $this->toastrSuccess('Post Deleted Successfully');
+
+        return redirect()->route('post.index');
     }
 }

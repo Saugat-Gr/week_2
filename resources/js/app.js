@@ -1,6 +1,11 @@
 import './bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
+
+window.toastr = toastr; // Make it globally available
+
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -30,4 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+
+
 

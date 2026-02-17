@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\LogUserRequest;
 use App\Models\User;
+use App\Traits\ToastrTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    use ToastrTrait;
+
     public function showLoginForm(){
            return view("login.index");
     }
@@ -25,9 +28,11 @@ class LoginController extends Controller
           if($user){
              $request->session()->regenerate();
 
+            $this->toastrSuccess("Logged In Sucessfully.");
              return redirect()->route('post.index');
           }
 
+          $this->toastrError('Could not Log In.');
           return redirect()->route('login.show')->withErrors([
              'invalid-login' => "Invalid Login Credentials"
           ], 'log-in');

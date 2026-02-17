@@ -24,6 +24,22 @@
 @endif
     @yield('content')
      <script src="{{ mix('js/app.js') }}"></script>
+     <script>
+    @if(session('toastr'))
+        // Get the flash data from Laravel session
+        const t = @json(session('toastr'));
+
+        // Display the toast using Toastr JS
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "timeOut": "2000"
+        };
+        toastr[t.type](t.message, t.title);
+    @endif
+</script>
+
 </body>
 </html>
 

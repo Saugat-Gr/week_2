@@ -1,2 +1,34 @@
     @import "bootstrap/dist/css/bootstrap.min.css";
     @import "bootstrap-icons/font/bootstrap-icons.css";
+
+    .tag-container {
+    background: #fff;
+}
+
+.tag-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.tag-badge button {
+    background: transparent;
+    border: none;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+.tag-suggestions {
+    top: 100%;
+    z-index: 1000;
+    display: none;
+}
+
+.tag-suggestions .suggestion {
+    cursor: pointer;
+}
+
+.tag-suggestions .suggestion:hover {
+    background-color: #f8f9fa; /* light hover for Bootstrap look */
+}

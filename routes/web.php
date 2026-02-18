@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TagController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -29,3 +30,4 @@ Route::get('/logout', [LoginController::class,'logout'])->name('users.logout');
 Route::post('/login', [LoginController::class,'authenticateUser'])->name('user.authenticate');
 Route::post('/register', [LoginController::class,'register'])->name('user.register');
 
+Route::get('/tags/search', [TagController::class, 'search'])->name('tags.search');

@@ -49,6 +49,22 @@
             @enderror
         </div>
 
+        <div class="mb-3">
+                <label for="tag-input" class="form-label">Tags</label>
+                <div class="tag-container border rounded p-2 d-flex flex-wrap gap-1 position-relative">
+                    <div class="selected-tags d-flex flex-wrap gap-1"></div>
+                    <input
+                        type="text"
+                        id="tag-input"
+                        class="form-control border-0 flex-grow-1"
+                        placeholder="Add tags..."
+                        autocomplete="off"
+                        style="min-width: 150px;"
+                    >
+                    <div class="tag-suggestions list-group position-absolute w-100"></div>
+                </div>
+        </div>
+
 
         <div class="mb-4">
             <label for="post_content" class="form-label">Post Description</label>

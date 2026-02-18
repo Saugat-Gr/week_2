@@ -37,11 +37,11 @@
                         <form action="{{  route('category.destroy', $category) }}" method="POST">
                          @method('DELETE')
                         @csrf
-                        <button class="btn btn-danger" type="submit"><i class="bi bi-trash-fill"></i></button>
+                        <button class="btn btn-danger" type="submit" onclick="return alert('Do you want to delete this? ')"><i class="bi bi-trash-fill"></i></button>
                         </form>
                     </td>
                 
-            </tr>
+            </tr>`  
                 @endforeach
         </tbody>
 

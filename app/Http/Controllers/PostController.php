@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Traits\ToastrTrait;
 use Auth;
 use Exception;
@@ -24,7 +25,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('category')->with('user')->get();
+        $posts = Post::with(['category', 'user', 'tags'])->get();
+
         return view('posts.index')->with('posts', $posts);
     }
 
@@ -55,6 +57,17 @@ class PostController extends Controller
 
             $validated_data = $request->validated();
 
+            $tags = [];
+
+            if(!empty($validated_data['tags'])){
+                 foreach($validated_data['tags'] as $tagName){
+                      $tag = Tag::firstOrCreate([
+                         'name' => strtolower(trim($tagName))
+                      ]);
+                      $tags[] = $tag->id;
+                 }
+            }
+
 
             $imagePath = [];
 
@@ -76,13 +89,16 @@ class PostController extends Controller
             // dd($validated_data, $imagePath);
 
 
-              (Post::create([
+              $post = (Post::create([
                   'title'=> $validated_data['title'],
                   'post_content' => $validated_data['post_content'],
                   'images' => ($imagePath),
                   'category_id' => $validated_data['category_id'],
                   'user_id' => Auth::user()->id
              ]));
+
+                  $post->tags()->sync($tags);
+
 
                  $this->toastrSuccess('Post Created Successfully');
                  return redirect()->route('post.index');

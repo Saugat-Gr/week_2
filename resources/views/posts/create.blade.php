@@ -8,13 +8,13 @@
 
  <div class="container-sm  border border-lg p-5 shadow-lg">
      
-     <form action="{{ route('post.store') }}" enctype="multipart/form-data" method="POST">
+     <form action="{{ route('post.store') }}" enctype="multipart/form-data" method="POST" class="mt-5">
      @csrf
        <h3 class="text-center">Create A Post</h3>
         
        <div class="mb-4">
             <label for="title" class="form-label">Title</label>
-            <input type="text" name="title" id="title" required class="form-control">
+            <input type="text" name="title" id="title" required class="form-control" value="{{ old('title') }}">
             @error('title')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -59,8 +59,7 @@
                         class="form-control border-0 flex-grow-1"
                         placeholder="Add tags..."
                         autocomplete="off"
-                        style="min-width: 150px;"
-                    >
+                        style="min-width: 150px;">
                     <div class="tag-suggestions list-group position-absolute w-100"></div>
                 </div>
         </div>
@@ -84,57 +83,62 @@
 
  </div>
 
+
+
  <script>
-    const easyMDE = new EasyMDE({
-        element: document.getElementById('editor'),
-        spellChecker: true,
-        status: false,
+     const easyMDE = new EasyMDE({
+         element: document.getElementById('editor'),
+         spellChecker: true,
+         status: false,
          maxHeight: "300px",
-        toolbar: [
-        "bold",
-        "italic",
-        "heading",
-        "|",
-        "quote",
-        "unordered-list",
-        "ordered-list",
-        "|",
-        "link",
-        "preview",
-        "side-by-side",
-        "fullscreen"
-    ]
-
-    });
-
-   function readURL(input) {
-
-    const preview = document.getElementById('preview');
-    preview.innerHTML = ""; // clear old previews
-
-    if (input.files) {
-
-        Array.from(input.files).forEach(file => {
-
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-
-                const img = document.createElement("img");
-                img.src = e.target.result;
-                img.style.width = "200px";
-                img.style.margin = "10px";
-
-                preview.appendChild(img);
-            };
-
-            reader.readAsDataURL(file);
+         toolbar: [
+             "bold",
+             "italic",
+             "heading",
+             "|",
+             "quote",
+             "unordered-list",
+             "ordered-list",
+             "|",
+             "link",
+             "preview",
+             "side-by-side",
+             "fullscreen"
+            ]
+            
         });
-    }
-}
+        
+        function readURL(input) {
+            
+            const preview = document.getElementById('preview');
+            preview.innerHTML = ""; // clear old previews
+            
+            if (input.files) {
+                
+                Array.from(input.files).forEach(file => {
+                    
+                    const reader = new FileReader();
+                    
+                    reader.onload = function (e) {
+                        
+                        const img = document.createElement("img");
+                        img.src = e.target.result;
+                        img.style.width = "200px";
+                        img.style.margin = "10px";
+                        
+                        preview.appendChild(img);
+                    };
+                    
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+        
+        
+    </script>
 
-
-</script>
-
+<script src="{{ asset('js/tagInput.js') }}"></script>
 
 @endsection 
+
+

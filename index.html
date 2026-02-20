@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laravel Sanctum SPA Auth Test</title>
+</head>
+<body>
+  <h1>Hello World</h1>
+
+  <button onclick="callAPI()">Call API</button>
+  <button type="submit" onclick="authenticate(event)">Authenticate User</button>
+
+<script>
+const API_BASE = 'http://127.0.0.1:8000';
+
+// Call protected API
+async function callAPI() {
+  try {
+    const xsrfToken = getCookie('XSRF-TOKEN');
+    const res = await fetch(`${API_BASE}/api/users`, {
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'X-XSRF-TOKEN': decodeURIComponent(xsrfToken)
+      },
+      redirect: 'manual' // do NOT follow redirects
+    });
+
+    // Handle redirect or failure
+    if (res.status === 302) {
+      console.warn('Redirect detected. Likely unauthenticated.');
+      alert('You are not authenticated!');
+      return;
+    }
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      console.error('HTTP Error', res.status, errorData);
+      alert('Error: ' + JSON.stringify(errorData));
+      return;
+    }
+
+    const data = await res.json();
+    console.log('Success:', data);
+    alert('API Success: ' + JSON.stringify(data));
+
+  } catch (error) {
+    console.error('Network Error:', error);
+  }
+}
+
+// Authenticate user
+async function authenticate(event) {
+  if (event && event.preventDefault) event.preventDefault();
+
+  // 1) Get CSRF cookie
+  const csrfRes = await fetch(`${API_BASE}/sanctum/csrf-cookie`, {
+    credentials: 'include',
+    headers: { 'Accept': 'application/json' },
+    redirect: 'manual'
+  });
+
+  if (csrfRes.status === 302) {
+    console.warn('Unexpected redirect on CSRF cookie fetch');
+    return;
+  }
+
+  console.log('CSRF cookie set');
+
+  // 2) Read XSRF-TOKEN from cookie
+  const xsrfToken = getCookie('XSRF-TOKEN');
+  if (!xsrfToken) {
+    console.log('Missing XSRF-TOKEN cookie');
+    return;
+  }
+
+  // 3) Login
+  const loginRes = await fetch(`${API_BASE}/api/login`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'X-XSRF-TOKEN': decodeURIComponent(xsrfToken)
+    },
+    body: JSON.stringify({
+      email: 'admin@gmail.com', // replace with real email
+      password: 'password'      // replace with real password
+    }),
+    redirect: 'manual' // important to capture 302 without following
+  });
+
+  // Handle redirect / failed login
+  if (loginRes.status === 302) {
+    console.warn('Redirect detected. Login failed or CSRF issue.');
+    alert('Login failed. Check credentials or CSRF token.');
+    return;
+  }
+
+  const data = await loginRes.json().catch(() => ({}));
+  console.log('Login response:', loginRes.status, data);
+
+  if (!loginRes.ok) {
+    alert('Login failed: ' + JSON.stringify(data));
+    return;
+  }
+
+  alert('Login successful!');
+}
+
+// Utility to read cookies
+function getCookie(name) {
+  return document.cookie
+    .split('; ')
+    .find(row => row.startsWith(name + '='))
+    ?.split('=')[1];
+}
+</script>
+</body>
+</html>

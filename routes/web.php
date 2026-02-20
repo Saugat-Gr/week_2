@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -17,3 +18,6 @@ Route::get('/page', function(){
 Route::get('users/trashed', [UserController::class, 'displayTrashed'])->name('users.trashed');
 Route::delete('users/hardDelete/{user}', [UserController::class, 'permanentDelete'])->name('users.hardDelete');
 Route::resource('users', UserController::class);
+
+
+Route::middleware('auth:sanctum')->get('api/login', [AuthController::class,'login']);

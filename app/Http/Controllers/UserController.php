@@ -18,14 +18,7 @@ class UserController extends Controller
      */
     public function index() 
     {
-         $users = User::paginate(10);
-  
-        return view('users.index')->with([
-        'users' => $users,
-        'data_type' => 'Users List'
-        ]);
-
-        // return view('users.index', compact('users'));
+        return User::all();
     }
 
     /**

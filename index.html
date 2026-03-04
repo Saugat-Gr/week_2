@@ -12,7 +12,7 @@
   <button type="submit" onclick="authenticate(event)">Authenticate User</button>
 
 <script>
-const API_BASE = 'http://127.0.0.1:8000';
+const API_BASE = 'http://127.0.0.1:8001';
 
 // Call protected API
 async function callAPI() {
@@ -24,7 +24,7 @@ async function callAPI() {
         'Accept': 'application/json',
         'X-XSRF-TOKEN': decodeURIComponent(xsrfToken)
       },
-      redirect: 'manual' // do NOT follow redirects
+      // redirect: 'manual' // do NOT follow redirects
     });
 
     // Handle redirect or failure
@@ -76,7 +76,7 @@ async function authenticate(event) {
   }
 
   // 3) Login
-  const loginRes = await fetch(`${API_BASE}/api/login`, {
+  const loginRes = await fetch(`${API_BASE}/login`, {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -88,7 +88,8 @@ async function authenticate(event) {
       email: 'admin@gmail.com', // replace with real email
       password: 'password'      // replace with real password
     }),
-    redirect: 'manual' // important to capture 302 without following
+    // allow following redirects so devtools shows real response
+    // redirect: 'manual'
   });
 
   // Handle redirect / failed login

@@ -20,4 +20,9 @@ Route::delete('users/hardDelete/{user}', [UserController::class, 'permanentDelet
 Route::resource('users', UserController::class);
 
 
-Route::middleware('auth:sanctum')->get('api/login', [AuthController::class,'login']);
+// Route::middleware('auth:sanctum')->get('api/login', [AuthController::class,'login']);
+
+// SPA login route (uses web middleware / session)
+use App\Http\Controllers\Api\AuthController as ApiAuthController;
+Route::post('/login', [ApiAuthController::class, 'login'])->name('spa.login');
+

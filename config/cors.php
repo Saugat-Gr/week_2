@@ -15,13 +15,17 @@ return [
     |
     */
 
-    'paths' => ['api/*', '/sanctum/csrf-cookie', ],
+    'paths' => ['api/*', '/sanctum/csrf-cookie', '/login'],
 
     'allowed_methods' => ['*'],
 
+    // restrict credentials to the specific dev origin
     'allowed_origins' => ['http://127.0.0.1:5500'],
 
+
     'allowed_origins_patterns' => [],
+
+
 
     'allowed_headers' => ['*'],
 
